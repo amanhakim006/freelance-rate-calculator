@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 flex flex-col min-h-screen">
+<body class="bg-gray-50 font-sans text-gray-800 flex flex-col min-h-screen relative">
 
     <header class="bg-teal-700 text-white p-6 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
@@ -42,11 +42,13 @@
                 </div>
             </div>
 
-            <div class="p-10">
-                <form action="https://formsubmit.co/amanhakim037@gmail.com" method="POST">
+            <div class="p-10 relative">
+                <form id="contactForm" action="https://formsubmit.co/ajax/amanhakim037@gmail.com" method="POST">
                     
-                    <input type="hidden" name="_subject" value="New Message from Rate Calculator!">
-                    <input type="hidden" name="_captcha" value="false"> <input type="hidden" name="_next" value="https://freelanceratecalculator.netlify.app/thankyou.html"> <div class="space-y-6">
+                    <input type="hidden" name="_subject" value="New Inquiry from Rate Calculator">
+                    <input type="hidden" name="_captcha" value="false">
+
+                    <div class="space-y-6">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Your Email</label>
                             <input type="email" name="email" required placeholder="name@example.com" 
@@ -68,8 +70,8 @@
                                 class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-teal-500 focus:ring-2 focus:ring-teal-200 outline-none transition bg-gray-50"></textarea>
                         </div>
 
-                        <button type="submit" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 rounded-lg shadow-md transform active:scale-95 transition-all flex justify-center items-center gap-2">
-                            Send Email <i class="fas fa-paper-plane"></i>
+                        <button id="submitBtn" type="submit" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-bold py-3 rounded-lg shadow-md transform active:scale-95 transition-all flex justify-center items-center gap-2">
+                            <span>Send Email</span> <i class="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </form>
@@ -79,7 +81,70 @@
 
     <footer class="bg-gray-800 text-gray-400 py-8 text-center mt-auto">
         <p class="text-teal-500 font-medium">Designed by Aman Hakim</p>
-        <p class="text-xs mt-2">&copy; 2025 Freelance Rate Calculator.</p>
+        <p class="text-xs mt-2">&copy; 2025 Freelance Rate Calculator. All rights reserved.</p>
     </footer>
+
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 backdrop-blur-sm transition-opacity duration-300">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full text-center transform scale-95 transition-transform duration-300">
+            <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Message Sent!</h2>
+            <p class="text-gray-600 mb-6 text-sm">
+                Thank you for contacting us. We have received your email and will reply shortly.
+            </p>
+
+            <button onclick="closeModal()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 rounded-lg shadow transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const modal = document.getElementById('successModal');
+        const btn = document.getElementById('submitBtn');
+        const btnText = btn.querySelector('span'); // Button ke andar ka text
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Page refresh hone se rokega
+
+            // Button Loading State
+            btnText.innerText = "Sending...";
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Send Data to FormSubmit (Background mein)
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Success! Show Popup
+                    modal.classList.remove('hidden'); // Popup dikhao
+                    form.reset(); // Form khali karo
+                } else {
+                    alert("Oops! There was a problem submitting your form.");
+                }
+            })
+            .catch(error => {
+                alert("Error sending message. Please check your internet connection.");
+            })
+            .finally(() => {
+                // Button Reset
+                btnText.innerText = "Send Email";
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            });
+        });
+
+        function closeModal() {
+            modal.classList.add('hidden'); // Popup chupao
+        }
+    </script>
+
 </body>
 </html>
