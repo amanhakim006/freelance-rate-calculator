@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Rate Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#2dd4bf', // Teal 400
+                            DEFAULT: '#0f766e', // Teal 700
+                            dark: '#0e7490', // Cyan 700
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Smooth fade in for results */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center p-4 font-sans text-gray-800">
+
+    <main class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden ring-1 ring-gray-900/5">
+        
+        <header class="bg-gradient-to-r from-cyan-600 to-teal-500 p-6 text-center relative overflow-hidden">
+            <div class="relative z-10">
+                <h1 class="text-2xl font-bold text-white tracking-tight">Freelance Rate Calculator</h1>
+                <p class="text-cyan-100 text-sm mt-1">Plan your income. Know your worth.</p>
+            </div>
+            <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white opacity-10 blur-xl"></div>
+        </header>
+
+        <div class="p-6 space-y-5">
+            
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Desired Annual Income</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                    <input type="number" id="annualIncome" placeholder="100000" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition shadow-sm" oninput="validateInput(this)">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Billable Hours/Week</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><i class="fa-regular fa-clock"></i></span>
+                        <input type="number" id="billableHours" placeholder="30" class="w-full pl-9 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition shadow-sm" oninput="validateInput(this)">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Weeks Off/Year</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"><i class="fa-regular fa-calendar"></i></span>
+                        <input type="number" id="weeksOff" placeholder="4" class="w-full pl-9 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition shadow-sm" oninput="validateInput(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Monthly Business Expenses</label>
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                    <input type="number" id="monthlyExpenses" placeholder="500" class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition shadow-sm" oninput="validateInput(this)">
+                </div>
+                <p class="text-xs text-gray-400 mt-1 ml-1">Includes software, internet, insurance, etc.</p>
+            </div>
+
+            <button onclick="calculateRate()" class="w-full bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 text-white font-bold py-3.5 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 mt-2">
+                Calculate My Rate
+            </button>
+        </div>
+
+        <div id="resultsArea" class="hidden bg-slate-50 border-t border-slate-200 p-6 fade-in">
+            <h3 class="text-center text-gray-500 text-sm font-medium uppercase tracking-wider mb-4">Minimum Hourly Rate</h3>
+            
+            <div class="flex flex-col items-center justify-center mb-6">
+                <div class="text-5xl font-extrabold text-gray-800 tracking-tight" id="hourlyRateDisplay">$0.00</div>
+                
+                <button onclick="copyToClipboard()" id="copyBtn" class="mt-3 flex items-center gap-2 text-sm font-medium text-teal-600 bg-teal-50 px-3 py-1.5 rounded-full hover:bg-teal-100 transition cursor-pointer">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>Copy Rate</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm text-center">
+                    <div class="text-xs text-gray-400 uppercase font-bold">Daily Rate</div>
+                    <div class="text-lg font-bold text-gray-700" id="dailyRateDisplay">$0</div>
+                </div>
+                <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm text-center">
+                    <div class="text-xs text-gray-400 uppercase font-bold">Weekly Rate</div>
+                    <div class="text-lg font-bold text-gray-700" id="weeklyRateDisplay">$0</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-8 text-center text-gray-400 text-sm">
+        <p>Designed by <span class="font-semibold text-gray-500">Aman Hakim</span></p>
+    </footer>
+
+    <script>
+        // Formatter for currency
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+
+        function validateInput(input) {
+            if (input.value < 0) input.value = 0;
+        }
+
+        function calculateRate() {
+            // 1. Get Values
+            const annualIncome = parseFloat(document.getElementById('annualIncome').value) || 0;
+            const billableHours = parseFloat(document.getElementById('billableHours').value) || 0;
+            const weeksOff = parseFloat(document.getElementById('weeksOff').value) || 0;
+            const monthlyExpenses = parseFloat(document.getElementById('monthlyExpenses').value) || 0;
+
+            // 2. Validation
+            if (billableHours === 0) {
+                alert("Billable hours cannot be zero.");
+                return;
+            }
+            if (weeksOff >= 52) {
+                alert("Weeks off must be less than 52.");
+                return;
+            }
+
+            // 3. Logic
+            // Formula: (Target Salary + (Monthly Expenses * 12)) / ((52 - Weeks Off) * Billable Hours)
+            const totalAnnualExpenses = monthlyExpenses * 12;
+            const totalRevenueNeeded = annualIncome + totalAnnualExpenses;
+            
+            const workingWeeks = 52 - weeksOff;
+            const totalBillableHours = workingWeeks * billableHours;
+
+            const hourlyRate = totalRevenueNeeded / totalBillableHours;
+            
+            // Daily Rate (Assuming 5 days a week based on billable hours spread evenly)
+            // Note: If someone works 30 hours, we assume a 5 day week = 6 hours/day average
+            const hoursPerDay = billableHours / 5; 
+            const dailyRate = hourlyRate * hoursPerDay;
+
+            const weeklyRate = hourlyRate * billableHours;
+
+            // 4. Update UI
+            document.getElementById('hourlyRateDisplay').innerText = formatter.format(hourlyRate);
+            document.getElementById('dailyRateDisplay').innerText = formatter.format(dailyRate);
+            document.getElementById('weeklyRateDisplay').innerText = formatter.format(weeklyRate);
+
+            // Show results section
+            const resultsArea = document.getElementById('resultsArea');
+            resultsArea.classList.remove('hidden');
+            
+            // Scroll to bottom gently on mobile
+            if(window.innerWidth < 640) {
+                resultsArea.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function copyToClipboard() {
+            const rateText = document.getElementById('hourlyRateDisplay').innerText;
+            const btn = document.getElementById('copyBtn');
+            const originalContent = btn.innerHTML;
+
+            // Copy logic
+            navigator.clipboard.writeText(rateText).then(() => {
+                // Feedback
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> <span>Copied!</span>';
+                btn.classList.remove('text-teal-600', 'bg-teal-50');
+                btn.classList.add('text-green-600', 'bg-green-100');
+
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.classList.add('text-teal-600', 'bg-teal-50');
+                    btn.classList.remove('text-green-600', 'bg-green-100');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
