@@ -1,221 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freelance Rate Calculator | Global Finance Tool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #0F766E 0%, #0D9488 100%);
-        }
-    </style>
-</head>
-<body class="bg-gray-50 text-gray-800">
-
-    <header class="gradient-bg text-white pt-16 pb-32 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <div class="mb-4 inline-block bg-white/20 px-4 py-1 rounded-full text-sm font-semibold tracking-wide backdrop-blur-sm">
-                GLOBAL FREELANCE TOOL
-            </div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Freelance Rate Calculator</h1>
-            <p class="text-lg md:text-xl text-teal-100 max-w-2xl mx-auto">
-                Stop guessing. Calculate your perfect hourly rate to hit your yearly income goals.
-            </p>
-        </div>
-    </header>
-
-    <main class="max-w-5xl mx-auto px-6 -mt-20 relative z-10 pb-20">
-        
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-10">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">How It Works</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fas fa-bullseye"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">1. Annual Goal</h3>
-                    <p class="text-sm text-gray-600">Total income you want in <span class="currency-text">USD</span>.</p>
-                </div>
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">2. Billable Hours</h3>
-                    <p class="text-sm text-gray-600">Hours you actually charge clients.</p>
-                </div>
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fas fa-umbrella-beach"></i>
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">3. Weeks Off</h3>
-                    <p class="text-sm text-gray-600">Vacation + Sick days (Example: 4 weeks).</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="glass-panel rounded-2xl p-6 md:p-10">
-            <div class="grid md:grid-cols-2 gap-10">
-                <div class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Desired Annual Income (<span class="currency-symbol">$</span>)</label>
-                        <input type="number" id="income" placeholder="e.g. 50000" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Billable Hours (Per Week)</label>
-                        <input type="number" id="hours" placeholder="e.g. 30" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Weeks Off (Per Year)</label>
-                        <input type="number" id="weeks" placeholder="e.g. 4" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Monthly Expenses (<span class="currency-symbol">$</span>)</label>
-                        <input type="number" id="expenses" placeholder="e.g. 200" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
-                    </div>
-
-                    <button onclick="calculateRate()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 rounded-lg shadow-lg transform active:scale-95 transition-all mt-4">
-                        CALCULATE RATE
-                    </button>
-                </div>
-
-                <div class="flex flex-col justify-center items-center bg-gray-900 text-white rounded-2xl p-8 text-center relative overflow-hidden">
-                    
-                    <div class="absolute top-4 right-4 z-20">
-                        <select id="currencySelector" onchange="updateCurrency()" class="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-xs outline-none cursor-pointer hover:bg-gray-700 transition">
-                            <option value="$" selected>🇺🇸 USD</option>
-                            <option value="₹">🇮🇳 INR</option>
-                            <option value="€">🇪🇺 EUR</option>
-                            <option value="£">🇬🇧 GBP</option>
-                            <option value="฿">🇹🇭 THB</option>
-                            <option value="₩">🇰🇷 KRW</option>
-                            <option value="¥">🇯🇵 JPY</option>
-                        </select>
-                    </div>
-
-                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-400 to-teal-500"></div>
-                    
-                    <p class="text-gray-400 uppercase tracking-widest text-sm mb-2 mt-4">Your Minimum Hourly Rate</p>
-                    <h2 class="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-teal-200 mb-4">
-                        <span class="currency-symbol">$</span><span id="resultValue">0.00</span>
-                    </h2>
-                    
-                    <div class="text-sm text-gray-400 mt-4 border-t border-gray-700 pt-4 w-full">
-                        <div class="flex justify-between mb-2">
-                            <span>Weekly Target:</span>
-                            <span class="text-white"><span class="currency-symbol">$</span><span id="weeklyTarget">0</span></span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span>Monthly Target:</span>
-                            <span class="text-white"><span class="currency-symbol">$</span><span id="monthlyTarget">0</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <article class="mt-16 prose prose-lg max-w-none text-gray-600">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6">Why You Need a Precise Hourly Rate?</h2>
-            <p>
-                Freelancing gives you freedom, but it also means you are responsible for every expense. When you work a 9-to-5 job, your employer covers health insurance, electricity, internet, and paid leaves. As a freelancer, your hourly rate <strong>must cover all of these</strong> plus your profit margin. 
-            </p>
-            <p>
-                Many beginners simply copy the rates of others on Upwork or Fiverr. This is a mistake. Your living costs in <strong>Mumbai</strong> might be different from someone in <strong>New York</strong> or <strong>Bangkok</strong>. This calculator helps you reverse-engineer your rate based on your actual financial needs.
-            </p>
-
-            <div class="grid md:grid-cols-2 gap-8 mt-10">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">🚫 Common Mistakes</h3>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li>Charging for 40 hours/week (you will only likely bill 25-30 hours).</li>
-                        <li>Forgetting to add 20-30% extra for Taxes.</li>
-                        <li>Not planning for sick days or family emergencies.</li>
-                        <li>Ignoring software subscriptions (Adobe, Hosting, etc.).</li>
+<div class="grid md:grid-cols-2 gap-8 mt-10">
+                <div class="bg-red-50 p-6 rounded-xl border border-red-100">
+                    <h3 class="text-xl font-bold text-red-700 mb-4 flex items-center gap-2">
+                        <i class="fas fa-times-circle text-2xl"></i> Common Mistakes
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-red-400 mt-1"></i>
+                            <span class="text-gray-700 text-sm">Charging for 40 hours/week (you will likely only bill 25-30 hours).</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-red-400 mt-1"></i>
+                            <span class="text-gray-700 text-sm">Forgetting to add 20-30% extra margin for Taxes.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-red-400 mt-1"></i>
+                            <span class="text-gray-700 text-sm">Not planning for sick days or family emergencies.</span>
+                        </li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">✅ Pro Tips</h3>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>Start Higher:</strong> It's easier to lower your rate than to raise it later.</li>
-                        <li><strong>Review Quarterly:</strong> As your portfolio grows, increase your goal income.</li>
-                        <li><strong>Use Local Currency:</strong> Always calculate expenses in your local currency first using our switcher.</li>
+
+                <div class="bg-teal-50 p-6 rounded-xl border border-teal-100">
+                    <h3 class="text-xl font-bold text-teal-700 mb-4 flex items-center gap-2">
+                        <i class="fas fa-check-circle text-2xl"></i> Pro Tips
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-teal-500 mt-1"></i>
+                            <span class="text-gray-700 text-sm"><strong>Start Higher:</strong> It's easier to lower your rate than to raise it later.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-teal-500 mt-1"></i>
+                            <span class="text-gray-700 text-sm"><strong>Review Quarterly:</strong> As your portfolio grows, increase your income goal.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-teal-500 mt-1"></i>
+                            <span class="text-gray-700 text-sm"><strong>Use Local Currency:</strong> Always calculate expenses in your local currency.</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-
-            <h3 class="text-xl font-bold text-gray-800 mt-10 mb-4">How to Use This Tool Effectively</h3>
-            <p>
-                <strong>Step 1:</strong> Be honest about your "Desired Annual Income". Include your savings goals. <br>
-                <strong>Step 2:</strong> Estimate your "Billable Hours". This is time strictly spent designing or coding. Replying to emails is NOT billable. <br>
-                <strong>Step 3:</strong> Don't forget "Weeks Off". Burnout is real. Plan for at least 4 weeks of rest per year.
-            </p>
-        </article>
-
-    </main>
-
-    <footer class="bg-gray-800 text-gray-400 py-10 text-center border-t border-gray-700">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-wrap justify-center gap-6 mb-6 text-sm">
-                <a href="about.html" class="hover:text-white transition">About Us</a>
-                <span class="text-gray-600">|</span>
-                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
-                <span class="text-gray-600">|</span>
-                <a href="terms.html" class="hover:text-white transition">Terms & Conditions</a>
-                <span class="text-gray-600">|</span>
-                <a href="contact.html" class="hover:text-white transition">Contact Us</a>
-            </div>
-
-            <div class="mb-6">
-                <p class="text-teal-500 font-medium tracking-wide">Designed by Aman Hakim</p>
-            </div>
-
-            <p class="text-xs text-gray-500">&copy; 2025 Freelance Rate Calculator. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        function updateCurrency() {
-            const selector = document.getElementById('currencySelector');
-            const symbol = selector.value;
-            const text = selector.options[selector.selectedIndex].text.split(' ')[1]; 
-            document.querySelectorAll('.currency-symbol').forEach(el => el.innerText = symbol);
-            document.querySelectorAll('.currency-text').forEach(el => el.innerText = text);
-        }
-
-        function calculateRate() {
-            const income = parseFloat(document.getElementById('income').value);
-            const hours = parseFloat(document.getElementById('hours').value);
-            const weeksOff = parseFloat(document.getElementById('weeks').value);
-            const monthlyExpense = parseFloat(document.getElementById('expenses').value);
-
-            if (!income || !hours || !weeksOff) {
-                alert("Please fill in all fields correctly!");
-                return;
-            }
-
-            const totalAnnualExpenses = monthlyExpense ? (monthlyExpense * 12) : 0;
-            const totalTarget = income + totalAnnualExpenses;
-            const workingWeeks = 52 - weeksOff;
-            const totalBillableHours = workingWeeks * hours;
-            const hourlyRate = totalTarget / totalBillableHours;
-
-            document.getElementById('resultValue').innerText = hourlyRate.toFixed(2);
-            document.getElementById('weeklyTarget').innerText = (totalTarget / workingWeeks).toFixed(0);
-            document.getElementById('monthlyTarget').innerText = (totalTarget / 12).toFixed(0);
-        }
-    </script>
-</body>
-</html>
