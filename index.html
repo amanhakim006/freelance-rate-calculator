@@ -79,24 +79,49 @@
         <div class="glass-panel rounded-2xl p-6 md:p-10">
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="space-y-5">
+                    
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Desired Annual Income (<span class="currency-symbol">$</span>)</label>
-                        <input type="number" id="income" placeholder="e.g. 50000" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="block text-sm font-semibold text-gray-700">Desired Annual Income</label>
+                            
+                            <select id="currencySelector" onchange="updateCurrency()" class="bg-teal-50 text-teal-800 border border-teal-200 rounded px-2 py-1 text-xs font-bold outline-none cursor-pointer hover:bg-teal-100 transition">
+                                <option value="$" selected>🇺🇸 USD ($)</option>
+                                <option value="₹">🇮🇳 INR (₹)</option>
+                                <option value="€">🇪🇺 EUR (€)</option>
+                                <option value="£">🇬🇧 GBP (£)</option>
+                                <option value="฿">🇹🇭 THB (฿)</option>
+                                <option value="₩">🇰🇷 KRW (₩)</option>
+                                <option value="¥">🇯🇵 JPY (¥)</option>
+                            </select>
+                        </div>
+                        <div class="relative">
+                            <span class="absolute left-4 top-4 text-gray-500 font-bold currency-symbol">$</span>
+                            <input type="number" id="income" placeholder="e.g. 50000" class="w-full pl-10 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        </div>
                     </div>
                     
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Billable Hours (Per Week)</label>
-                        <input type="number" id="hours" placeholder="e.g. 30" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        <div class="relative">
+                            <span class="absolute left-4 top-4 text-gray-500"><i class="fas fa-clock"></i></span>
+                            <input type="number" id="hours" placeholder="e.g. 30" class="w-full pl-10 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-2">Weeks Off (Per Year)</label>
-                        <input type="number" id="weeks" placeholder="e.g. 4" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        <div class="relative">
+                            <span class="absolute left-4 top-4 text-gray-500"><i class="fas fa-calendar-minus"></i></span>
+                            <input type="number" id="weeks" placeholder="e.g. 4" class="w-full pl-10 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Monthly Expenses (<span class="currency-symbol">$</span>)</label>
-                        <input type="number" id="expenses" placeholder="e.g. 200" class="w-full p-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Monthly Expenses</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-4 text-gray-500 font-bold currency-symbol">$</span>
+                            <input type="number" id="expenses" placeholder="e.g. 200" class="w-full pl-10 pr-4 py-4 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-500 outline-none transition bg-gray-50">
+                        </div>
                     </div>
 
                     <button onclick="calculateRate()" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 rounded-lg shadow-lg transform active:scale-95 transition-all mt-4">
@@ -105,19 +130,6 @@
                 </div>
 
                 <div class="flex flex-col justify-center items-center bg-gray-900 text-white rounded-2xl p-8 text-center relative overflow-hidden">
-                    
-                    <div class="absolute top-4 right-4 z-20">
-                        <select id="currencySelector" onchange="updateCurrency()" class="bg-gray-800 text-white border border-gray-700 rounded px-2 py-1 text-xs outline-none cursor-pointer hover:bg-gray-700 transition">
-                            <option value="$" selected>🇺🇸 USD</option>
-                            <option value="₹">🇮🇳 INR</option>
-                            <option value="€">🇪🇺 EUR</option>
-                            <option value="£">🇬🇧 GBP</option>
-                            <option value="฿">🇹🇭 THB</option>
-                            <option value="₩">🇰🇷 KRW</option>
-                            <option value="¥">🇯🇵 JPY</option>
-                        </select>
-                    </div>
-
                     <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-cyan-400 to-teal-500"></div>
                     
                     <p class="text-gray-400 uppercase tracking-widest text-sm mb-2 mt-4">Your Minimum Hourly Rate</p>
@@ -162,10 +174,6 @@
                             <i class="fas fa-times text-red-400 mt-1"></i>
                             <span class="text-gray-700 text-sm">Forgetting to add 20-30% extra margin for Taxes.</span>
                         </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-times text-red-400 mt-1"></i>
-                            <span class="text-gray-700 text-sm">Not planning for sick days or family emergencies.</span>
-                        </li>
                     </ul>
                 </div>
 
@@ -180,43 +188,38 @@
                         </li>
                         <li class="flex items-start gap-3">
                             <i class="fas fa-check text-teal-500 mt-1"></i>
-                            <span class="text-gray-700 text-sm"><strong>Review Quarterly:</strong> As your portfolio grows, increase your income goal.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fas fa-check text-teal-500 mt-1"></i>
                             <span class="text-gray-700 text-sm"><strong>Use Local Currency:</strong> Always calculate expenses in your local currency.</span>
                         </li>
                     </ul>
                 </div>
             </div>
-
+            
             <h3 class="text-xl font-bold text-gray-800 mt-10 mb-4">How to Use This Tool Effectively</h3>
             <p>
                 <strong>Step 1:</strong> Be honest about your "Desired Annual Income". Include your savings goals. <br>
                 <strong>Step 2:</strong> Estimate your "Billable Hours". This is time strictly spent designing or coding. Replying to emails is NOT billable. <br>
-                <strong>Step 3:</strong> Don't forget "Weeks Off". Burnout is real. Plan for at least 4 weeks of rest per year.
             </p>
         </article>
 
     </main>
 
-    <footer class="bg-gray-800 text-gray-400 py-10 text-center border-t border-gray-700">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-wrap justify-center gap-6 mb-6 text-sm">
-                <a href="about.html" class="hover:text-white transition">About Us</a>
+    <footer class="bg-gray-800 text-gray-400 py-8 text-center border-t border-gray-700">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-center items-center gap-3 md:gap-6 mb-4 text-xs md:text-sm">
+                <a href="about.html" class="hover:text-white transition whitespace-nowrap">About Us</a>
                 <span class="text-gray-600">|</span>
-                <a href="privacy.html" class="hover:text-white transition">Privacy Policy</a>
+                <a href="privacy.html" class="hover:text-white transition whitespace-nowrap">Privacy Policy</a>
                 <span class="text-gray-600">|</span>
-                <a href="terms.html" class="hover:text-white transition">Terms & Conditions</a>
+                <a href="terms.html" class="hover:text-white transition whitespace-nowrap">Terms</a>
                 <span class="text-gray-600">|</span>
-                <a href="contact.html" class="hover:text-white transition">Contact Us</a>
+                <a href="contact.html" class="hover:text-white transition whitespace-nowrap">Contact Us</a>
             </div>
 
-            <div class="mb-6">
-                <p class="text-teal-500 font-small tracking-wide">Designed by Aman Hakim</p>
+            <div class="mb-4">
+                <p class="text-teal-500 font-medium text-xs tracking-wide opacity-80">Designed by Aman Hakim</p>
             </div>
 
-            <p class="text-xs text-gray-500">&copy; 2025 Freelance Rate Calculator. All rights reserved.</p>
+            <p class="text-[10px] text-gray-500">&copy; 2025 Freelance Rate Calculator. All rights reserved.</p>
         </div>
     </footer>
 
