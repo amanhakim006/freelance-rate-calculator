@@ -6,7 +6,7 @@
     <title>Freelance Rate Calculator | Global Finance Tool</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -37,29 +37,41 @@
 
     <main class="max-w-5xl mx-auto px-6 -mt-20 relative z-10 pb-20">
         
-        <div class="bg-white rounded-2xl shadow-xl p-8 mb-10">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">How It Works</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fas fa-bullseye"></i>
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-10">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 border-b pb-4">How It Works</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-md transition relative overflow-hidden group">
+                    <div class="absolute top-2 right-4 text-6xl font-bold text-gray-100 group-hover:text-teal-50 transition select-none">1</div>
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-2xl mb-4 shadow-sm">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Set Annual Goal</h3>
+                        <p class="text-sm text-gray-600">Enter the total income you want to take home in <span class="currency-text">USD</span>.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">1. Annual Goal</h3>
-                    <p class="text-sm text-gray-600">Total income you want in <span class="currency-text">USD</span>.</p>
                 </div>
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fas fa-clock"></i>
+
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-md transition relative overflow-hidden group">
+                    <div class="absolute top-2 right-4 text-6xl font-bold text-gray-100 group-hover:text-teal-50 transition select-none">2</div>
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-2xl mb-4 shadow-sm">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Billable Hours</h3>
+                        <p class="text-sm text-gray-600">Hours strictly spent on client work (not emails or meetings).</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">2. Billable Hours</h3>
-                    <p class="text-sm text-gray-600">Hours you actually charge clients.</p>
                 </div>
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-xl mb-4">
-                        <i class="fas fa-umbrella-beach"></i>
+
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100 hover:shadow-md transition relative overflow-hidden group">
+                    <div class="absolute top-2 right-4 text-6xl font-bold text-gray-100 group-hover:text-teal-50 transition select-none">3</div>
+                    <div class="relative z-10 flex flex-col items-center text-center">
+                        <div class="w-14 h-14 bg-teal-100 text-teal-700 rounded-full flex items-center justify-center text-2xl mb-4 shadow-sm">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2 text-gray-900">Weeks Off</h3>
+                        <p class="text-sm text-gray-600">Vacation & Sick days. We subtract this from the working year.</p>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">3. Weeks Off</h3>
-                    <p class="text-sm text-gray-600">Vacation + Sick days (Example: 4 weeks).</p>
                 </div>
             </div>
         </div>
@@ -137,21 +149,43 @@
             </p>
 
             <div class="grid md:grid-cols-2 gap-8 mt-10">
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">🚫 Common Mistakes</h3>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li>Charging for 40 hours/week (you will only likely bill 25-30 hours).</li>
-                        <li>Forgetting to add 20-30% extra for Taxes.</li>
-                        <li>Not planning for sick days or family emergencies.</li>
-                        <li>Ignoring software subscriptions (Adobe, Hosting, etc.).</li>
+                <div class="bg-red-50 p-6 rounded-xl border border-red-100">
+                    <h3 class="text-xl font-bold text-red-700 mb-4 flex items-center gap-2">
+                        <i class="fas fa-times-circle text-2xl"></i> Common Mistakes
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-red-400 mt-1"></i>
+                            <span class="text-gray-700 text-sm">Charging for 40 hours/week (you will likely only bill 25-30 hours).</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-red-400 mt-1"></i>
+                            <span class="text-gray-700 text-sm">Forgetting to add 20-30% extra margin for Taxes.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-times text-red-400 mt-1"></i>
+                            <span class="text-gray-700 text-sm">Not planning for sick days or family emergencies.</span>
+                        </li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">✅ Pro Tips</h3>
-                    <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>Start Higher:</strong> It's easier to lower your rate than to raise it later.</li>
-                        <li><strong>Review Quarterly:</strong> As your portfolio grows, increase your goal income.</li>
-                        <li><strong>Use Local Currency:</strong> Always calculate expenses in your local currency first using our switcher.</li>
+
+                <div class="bg-teal-50 p-6 rounded-xl border border-teal-100">
+                    <h3 class="text-xl font-bold text-teal-700 mb-4 flex items-center gap-2">
+                        <i class="fas fa-check-circle text-2xl"></i> Pro Tips
+                    </h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-teal-500 mt-1"></i>
+                            <span class="text-gray-700 text-sm"><strong>Start Higher:</strong> It's easier to lower your rate than to raise it later.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-teal-500 mt-1"></i>
+                            <span class="text-gray-700 text-sm"><strong>Review Quarterly:</strong> As your portfolio grows, increase your income goal.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check text-teal-500 mt-1"></i>
+                            <span class="text-gray-700 text-sm"><strong>Use Local Currency:</strong> Always calculate expenses in your local currency.</span>
+                        </li>
                     </ul>
                 </div>
             </div>
